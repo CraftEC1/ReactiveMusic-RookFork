@@ -257,11 +257,12 @@ public final class SongPicker {
             songpackEventMap.put(SongpackEventType.NEARBY_MOBS, nearbyHostile.size() >= 1);
 
         }
-
+        
+        //custom
         {
             List<HostileEntity> nearbyHostile = world.getEntitiesByClass(
                     HostileEntity.class,
-                    GetBoxAroundPlayer(player, 36.f, 12.f),
+                    GetBoxAroundPlayer(player, 40.f, 15.f),  //expanded area
                     entity -> entity != null
             );
 
