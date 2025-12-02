@@ -258,15 +258,27 @@ public final class SongPicker {
 
         }
         
-        //custom
+        //custom: TARGETED_BY_MOB
         {
             List<HostileEntity> nearbyHostile = world.getEntitiesByClass(
                     HostileEntity.class,
-                    GetBoxAroundPlayer(player, 40.f, 15.f),  //expanded area
+                    GetBoxAroundPlayer(player, 32.f, 12.f),  //increased radii
                     entity -> entity != null
             );
 
-            songpackEventMap.put(SongpackEventType.NEARBY_MOBS_ADVANCED, nearbyHostile.size() >= 1);
+            ArrayList<HostileEntity> validHostile = new ArrayList<HostileEntity>
+            for (HostileEntity nearbyHostile : hostile) {
+                LivingEntity target = hostile.getTarget();
+                //Primary Condition: Hostile is targetting player
+                if (target == player) {
+                    validHostile.add(hostile);
+                //Alternative condition: Hostile is part of recent damage sources
+                } else if (recentEntityDamageSources.containsKey(hostile)) {
+                    validHostile.add(hostile)
+                } 
+            }
+
+            songpackEventMap.put(SongpackEventType.TARGETED_BY_MOB, validHostile.size() >= 1);
 
         }
 
